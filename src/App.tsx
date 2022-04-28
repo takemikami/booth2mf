@@ -13,6 +13,27 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import { usePapaParse } from 'react-papaparse';
 
+// local storage hook
+// see. https://www.robinwieruch.de/local-storage-react/
+const useLocalStorage = (storageKey: string, initialState: any) => {
+    const getState = () => {
+        const storageValue: string | null = localStorage.getItem(storageKey)
+        if (storageValue != null ) {
+            try {
+                return JSON.parse(storageValue)
+            } catch(ex) {
+                console.log(ex)
+            }
+        }
+        return initialState
+    }
+    const [value, setValue] = React.useState(getState);
+    React.useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(value));
+    }, [value, storageKey]);
+    return [value, setValue];
+};
+
 const columns = [
     // { field: 'id', headerName: 'ID', sortable: false, width: 100 },
     { field: 'no', headerName: '取引No', sortable: false, width: 80 },
@@ -146,10 +167,10 @@ function CustomToolbar() {
 
 function BoothToMF() {
     // 消費税・勘定科目の設定
-    const [taxSales, setTaxSales] = React.useState('対象外');
-    const [taxCommission, setTaxCommission] = React.useState('対象外');
-    const [saleSbj2, setSaleSbj2] = React.useState('');
-    const [receivableSbj2, setReceivableSbj2] = React.useState('');
+    const [taxSales, setTaxSales] =  useLocalStorage('tax-sales', '対象外');
+    const [taxCommission, setTaxCommission] = useLocalStorage('tax-commission', '対象外');
+    const [saleSbj2, setSaleSbj2] = useLocalStorage('sales-subject', '');
+    const [receivableSbj2, setReceivableSbj2] = useLocalStorage('receivable-subject', '');
     const handleChangeTaxSales = (event: SelectChangeEvent) => {
         setTaxSales(event.target.value);
     };
