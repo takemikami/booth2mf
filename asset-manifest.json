@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/booth2mf/static/js/main.21b5afb0.js",
+    "main.js": "/booth2mf/static/js/main.e9d9f354.js",
     "index.html": "/booth2mf/index.html",
-    "main.21b5afb0.js.map": "/booth2mf/static/js/main.21b5afb0.js.map"
+    "main.e9d9f354.js.map": "/booth2mf/static/js/main.e9d9f354.js.map"
   },
   "entrypoints": [
-    "static/js/main.21b5afb0.js"
+    "static/js/main.e9d9f354.js"
   ]
 }
