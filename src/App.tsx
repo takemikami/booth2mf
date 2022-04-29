@@ -152,14 +152,12 @@ const transformCsv = (rawData: any, settings: { [key: string]: any; }) => {
     return journals;
 }
 
-function CustomToolbar() {
+function CustomToolbar(csvOptions: any) {
     return (
         <GridToolbarContainer>
             <GridToolbarExport
                 printOptions={{ disableToolbarButton: true }}
-                csvOptions={{
-                    fileName: 'booth2mf',
-                }}
+                csvOptions={csvOptions}
             />
         </GridToolbarContainer>
     );
@@ -195,6 +193,7 @@ function BoothToMF() {
             setFileOriginName(files[0]['name']);
         }
     };
+    const [fileName, setFileName] = React.useState("booth2mf");
 
     // データの生成
     const rows00 = [
@@ -223,6 +222,7 @@ function BoothToMF() {
                 }
             }
             fileReader.readAsText(fileOrigin);
+            setFileName('booth2mf_' + fileOriginName.replace(/\.[^/.]+$/, ""));
         }
     }
 
@@ -342,6 +342,9 @@ function BoothToMF() {
                         disableSelectionOnClick
                         components={{
                             Toolbar: CustomToolbar,
+                        }}
+                        componentsProps={{
+                            toolbar: {fileName: fileName}
                         }}
                     />
                 </div>
